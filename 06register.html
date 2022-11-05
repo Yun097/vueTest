@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>register</title>
+</head>
+<body>
+    <div class="wrap">
+        <form action="">
+            <div class="avatar" 
+                @mouseover="formHover = true"
+                @mouseover="formHover = false"
+                :style="{
+                    background: activeColor? activeColor: '#ddd'
+            }">
+                <div class="head" :style="{
+                    left: formHover? '1.5rem': '1rem'
+                }"></div>
+                <div class="body"></div>
+            </div>
+            <label for="">email</label>
+            <input type="email" v-model="email">
+            <br/>
+            <label for="">name</label>
+            <input type="text" v-model.trim="name">
+            <!-- 1{{name}}1 -->
+            <div>
+                <label for="">加購餐點</label>
+                <input type="checkbox" name="menu" value="台式" v-model="menu">
+                <label for="">不加購餐點</label>
+                <input type="checkbox" name="menu" value="日式" v-model="menu">
+                <!-- {{menu}} -->
+            </div>
+            <div>
+                <input type="radio" name="location" id="jp" value="jp" v-model="location">
+                <label for="jp">jp</label>
+                <input type="radio" name="location" id="js" value="js"
+                v-model="location">
+                <label for="js">js</label>
+                <!-- {{location}} -->
+            </div>
+            <label for="food">food</label>
+            <select name="food" id="food" v-model="food">
+                <option disabld value="">請選擇</option>
+                <option value="pig">雪山梅花豬</option>
+                <option value="beef">健體牛</option>
+            </select>
+            <!-- {{food}} -->
+            <div>
+                <input type="color" name="head" id="head" v-model="activeColor" value="">
+                <label for="head">Head</label> 
+                <!-- {{activeColor}} -->
+            </div>
+            <div>
+                <!-- {{date}} -->
+                <label for="start">Start date:</label>
+                <input type="date" name="trip-start" id="start" v-model="date"
+                        min="2022-01-01" max="2022-12-31">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
