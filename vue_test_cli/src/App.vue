@@ -1,9 +1,15 @@
 <template>
-  <nav>
+  <header>
+    Header
+    <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
+  </header>
+
   <router-view/>
+
+  <footer>Footer </footer>
 </template>
 
 <style lang="scss">
@@ -14,7 +20,13 @@
   text-align: center;
   color: #2c3e50;
 }
-
+header{
+  background-color: #111;
+}
+footer{
+  background-color: #ddd;
+  height: 10rem;
+}
 nav {
   padding: 30px;
 

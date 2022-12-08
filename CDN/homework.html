@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>計算機~~</title>
+</head>
+<body>
+  <div class="btn" @click="append('1')">1</div>
+  <div class="btn operator" @click="plus">+</div>
+  <div class="btn operator" @click="equal">=</div>
+  <input class="display" v-model="current"></input>
+
+  <script>
+    export default {
+      name: "Calculator",
+        data() {
+          return {
+            current: "",
+            previous: "",
+            operator: null,
+            operatorClicked: false
+          };
+        },
+      methods: {
+        append(number) {
+          // 如果已點選任何運算子，則清空目前的值
+          if (this.operatorClicked) this.current = "";
+          // 重置operatorClicked的值，讓第二個數字也能正常輸入
+          this.operatorClicked = false;
+          this.current =
+          this.current === "0" ? `${number}` : `${this.current}${number}`;
+          this.current = this.current === 0 ? `${number}` : `${this.current}${number}`
+        },
+        plus() {
+          // 傳入運算函數
+          this.operator = (a, b) => a + b;
+          this.operator = (a, b) => a - b;
+          this.operator = (a, b) => a * b;
+          this.operator = (a, b) => a / b;
+
+          // 呼叫設定setPrevious的函數
+          this.setPrevious();
+        },
+        setPrevious() {
+          // 將目前的值存在previous(按下個數字前要清空目前的current)
+          this.previous = this.current;
+          // 表示使用者確實按下任何一個運算子
+          this.operatorClicked = true;
+        },   
+        equal() {
+          console.log(this.current, this.previous);
+          this.current = `${this.operator(
+            parseFloat(this.previous),
+            parseFloat(this.current)
+          )}`;
+          this.operator = null;
+          this.operatorClicked = false;
+        },  
+      }
+    };
+        </script>
+</body>
+</html>
