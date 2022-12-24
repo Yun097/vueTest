@@ -4,20 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>04</title>
+    <title>計算機</title>
 </head>
 <body>
     <div id="app">
-        <button v-for="num in 9" :key="num" @click="keyin = num">{{num}}</button>
-        <button @click="keyin = 0">0</button>
-        <button @click="reduce">-</button>
-        <button @click="add">+</button>
-        <button @click="calc">=</button>
-        <button @click="clear">C</button>
-        <div>
-            step: {{step}}
+        <div class="keyin">{{cache}} {{operator}} {{keyin}}</div>
+        <div class="result">總計:{{total}}</div>
+        <div class="calc_btn_up">
+            <button @click="clear">C</button>
+            <button @click="equal('-')">-</button>
+            <button @click="equal('+')">+</button>
+            <button @click="equal('*')">x</button>
+            <button @click="equal('/')">/</button>
         </div>
-        <h6>result: {{result}}</h6>
+        <div class="calc_btn_down">
+            <button v-for="num in 9" :key="num" @click="keyNumber(num)">{{num}}</button>
+            <button @click="keyNumber(0)">0</button>
+            <button @click="keyDote">.</button>
+            <button @click="compute">=</button>
+            
+        </div>
    
     </div>
     <script src="https://unpkg.com/vue@next"></script>
@@ -25,24 +31,83 @@
         Vue.createApp({
             data(){
                 return{
-                    step:'',
-                    keyin: 0,
-                    result: 0
+                    keyin:'',
+                    result: 0,
+                    cache: null,
+                    operator: '',
+                    total: 0,
                 }
             },
             methods:{
-                add(){
-                    this.result +=this.keyin
+                keyNumber(number){
+                    if(this.keyin === '0' && number === 0) return
+                    this.keyin += number.toString()
                 },
-                reduce(){
-                    this.result -= 1
+                keyDote(){
+                    if(this.keyin.includes('.'))return
+                    this.keyin += '.'
                 },
-                sumTotal(){
-                    this.total = this.count*this.price
+                equal(operator){
+                    this.operator = operator
+                    this.cache = this.keyin? parseFloat(this.keyin): 0
+                    this.keyin = ''
+                },
+                compute(){
+                    if(this.cache === null)return
+                    const Keyin = this.keyin? parseFloat(this.keyin): 0
+                    switch(this.operator){
+                        case '+':
+                            this.total = this.cache + Keyin
+                            break;
+                        case '-':
+                            this.total = this.cache - Keyin
+                            break;
+                        case '*':
+                            this.total = this.cache * Keyin
+                            break;
+                        case '/':
+                            this.total = this.cache / Keyin
+                            break;
+                    }
+                },
+                clear(){
+                    this.keyin = ''
+                    this.cache = null
+                    this.total = 0
+                    this.result = 0
+                    this.operator = ''
                 }
             }
         }).mount("#app")
               
     </script>
+    <style>
+        #app{
+            width: 250px;
+            padding: 10px;
+            background-color: orange;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .keyin{
+            width: 220px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #ccc;
+            margin: 10px;
+        }
+        .calc_btn_up,
+        .calc_btn_down
+        {   width: 250px; }
+        button{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ccc;
+            border: 1px solid #aaa;
+            font-size: 20px;
+            margin: 5px;
+        }
+    </style>
 </body>
 </html>
